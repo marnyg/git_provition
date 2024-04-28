@@ -1,0 +1,6 @@
+(library
+ (preprocess
+  (pps ppx_inline_test ppx_expect))
+ (libraries fmt core base)
+ (inline_tests)
+ (name myPro))

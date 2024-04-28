@@ -1,0 +1,4 @@
+(executables
+ (public_names main)
+ (names main)
+ (libraries myPro fmt))
