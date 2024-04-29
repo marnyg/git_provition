@@ -9,7 +9,7 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       myPro = (opam-nix.lib.x86_64-linux.buildDuneProject { } "myPro" ./. { ocaml-base-compiler = "*"; }).myPro;
       myShell = pkgs.mkShell {
-        buildInputs = [ pkgs.nixd pkgs.dune_3 pkgs.ocaml pkgs.opam];
+        buildInputs = with pkgs; [ nixd dune_3 ocaml opam ocamlPackages.ocamlformat_0_26_0 ];
       };
     in
     {
