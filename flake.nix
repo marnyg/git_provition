@@ -3,13 +3,25 @@
 
   inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
   inputs.opam-nix.url = "github:tweag/opam-nix";
+  inputs.mynvim.url = "github:marnyg/nixos";
+  inputs.nixvim.url = "github:nix-community/nixvim";
 
-  outputs = { self, nixpkgs, opam-nix }:
+  outputs = { self, nixvim, mynvim, nixpkgs, opam-nix }:
     let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       myPro = (opam-nix.lib.x86_64-linux.buildDuneProject { } "myPro" ./. { ocaml-base-compiler = "*"; }).myPro;
+
+      mynixvim =
+        nixvim.legacyPackages.x86_64-linux.makeNixvimWithModule
+          {
+            inherit pkgs; module = {
+            imports = [ mynvim.nixvimModules.nixVim ];
+          };
+          };
+
       myShell = pkgs.mkShell {
         buildInputs = with pkgs; [ nixd dune_3 ocaml opam ocamlPackages.ocamlformat_0_26_0 ];
+        packages = [ mynixvim ];
       };
     in
     {
