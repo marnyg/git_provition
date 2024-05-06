@@ -1,4 +1,5 @@
 (executables
  (public_names main)
+ (modes byte exe)
  (names main)
  (libraries myPro fmt))
